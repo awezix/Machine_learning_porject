@@ -17,7 +17,7 @@ def getting_req(file_path:str)->list[str]:
 setup(
     name="ML project",
     version="0.0.0.1",
-    author="awezix",
+    author="awezix",  
     author_email="aawezix@gmail.com",
     packages=find_packages(),
     # install_requires=['numpy','pandas','seaborn']  #for many packages we cannot type all the packages
