@@ -44,7 +44,50 @@ class ModelTrainer:
                 "Gradient Boost":GradientBoostingRegressor(),
                 "XGBoost":XGBRegressor() 
             }
-            model_report:dict=evaluate_model(x_train=x_train,x_test=x_test,y_train=y_train,y_test=y_test,models=models)
+
+            params={
+                'Linear Regression':{},
+                'K-Neighbour':{
+                    'n_neighbours':[5,7,9,11],
+                    # 'algorithm':['ball_tree,kd_tree','brute']
+                },
+                "Decision Tree":{
+                    'criterion':['squared_error','friedman_mse','absolute_error','poisson'],
+                    # 'max_depth':[]
+                    'max_features':['sqrt','log2'],
+
+                },
+                'Random Froest':{
+                    # 'criterion':['squared_error','friedman_mse','absolute_error','poisson'],
+                    # 'max_features':['sqrt','log2'],
+                    'n_estimators':[8,16,32,64,128,256]
+                },
+                'Gradient Boost':{
+                    # 'loss':['squared_error','absolute_error','quantile'],
+                    'learning_rate':[0.1,0.01,0.05,0.001],
+                    'subsample':[0.6,0.7,0.75,0.8,0.85,0.9],                    
+                    # 'criterion':['squared_error','friedman_mse','absolute_error','poisson'],
+                    # 'max_features':['sqrt','log2'],
+                    'n_estimators':[8,16,32,64,128,256]
+                },
+                'AdaBoost':{
+                    'learning_rate':[0.1,0.01,0.05,0.001],
+                    'n_estimators':[8,16,32,64,128,256]
+
+                },
+                'XGBoost':{
+                    'learning_rate':[0.1,0.01,0.05,0.001],
+                    'n_estimators':[8,16,32,64,128,256]
+                },
+                'CatBoost':{
+                    'learning_rate':[0.01,0.05,0.001],
+                    'depth':[6,8,10],
+                    'iterations':[30,50,100]
+
+                }
+
+            }
+            model_report:dict=evaluate_model(x_train=x_train,x_test=x_test,y_train=y_train,y_test=y_test,models=models,parameter=params)
 
             best_model_score=max(sorted(model_report.values()))
             best_model_name=list(model_report.keys())[
